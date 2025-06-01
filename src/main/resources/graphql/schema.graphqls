@@ -1,4 +1,4 @@
-scalar LocalDate # Precisamos declarar o scalar para LocalDate
+scalar Date # Precisamos declarar o scalar para LocalDate
 
 # Stubs para tipos definidos externamente
 type User @key(fields: "id") @extends {
@@ -23,7 +23,7 @@ type Project @key(fields: "id") {
     objective: String!
     summaryScope: String!
     targetAudience: String!
-    expectedStartDate: LocalDate!
+    expectedStartDate: Date!
     status: ProjectStatus!
     requester: User! # Referencia User
     group: Group     # Referencia Group (pode ser nulo)
@@ -39,8 +39,8 @@ input CreateProjectInput {
     objective: String!
     summaryScope: String!
     targetAudience: String!
-    expectedStartDate: LocalDate! # Formato esperado: "YYYY-MM-DD"
-    status: ProjectStatus = PENDING
+    expectedStartDate: Date! # Formato esperado: "YYYY-MM-DD"
+    status: ProjectStatus = PENDING_ANALYSIS
     requesterId: ID!
     groupId: ID # Opcional
 }
