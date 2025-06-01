@@ -1,0 +1,50 @@
+scalar LocalDate # Precisamos declarar o scalar para LocalDate
+
+# Stubs para tipos definidos externamente
+type User @key(fields: "id") @extends {
+    id: ID! @external
+}
+
+type Group @key(fields: "id") @extends {
+    id: ID! @external
+}
+
+enum ProjectStatus {
+    PENDING_ANALYSIS
+    UNDER_ANALYSIS
+    REJECTED
+    IN_PROGRESS
+    FINISHED
+}
+
+type Project @key(fields: "id") {
+    id: ID!
+    name: String!
+    objective: String!
+    summaryScope: String!
+    targetAudience: String!
+    expectedStartDate: LocalDate!
+    status: ProjectStatus!
+    requester: User! # Referencia User
+    group: Group     # Referencia Group (pode ser nulo)
+}
+
+type Query {
+    projectById(id: ID!): Project
+    allProjects: [Project]
+}
+
+input CreateProjectInput {
+    name: String!
+    objective: String!
+    summaryScope: String!
+    targetAudience: String!
+    expectedStartDate: LocalDate! # Formato esperado: "YYYY-MM-DD"
+    status: ProjectStatus = PENDING
+    requesterId: ID!
+    groupId: ID # Opcional
+}
+
+type Mutation {
+    createProject(input: CreateProjectInput!): Project
+}
