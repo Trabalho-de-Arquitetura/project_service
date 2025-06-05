@@ -19,17 +19,18 @@ enum ProjectStatus {
 
 type ProjectDTO @key(fields: "id") {
     id: ID!
-    name: String!
-    objective: String!
-    summaryScope: String!
-    targetAudience: String!
-    expectedStartDate: Date!
-    status: ProjectStatus!
-    requesterId: UserDTO! # Referencia User
-    groupId: GroupDTO     # Referencia Group (pode ser nulo)
+    name: String
+    objective: String
+    summaryScope: String
+    targetAudience: String
+    expectedStartDate: Date
+    status: ProjectStatus
+    requesterId: UserDTO
+    groupId: GroupDTO
 }
 
 type Query {
+    findProjectById(id: ID!): ProjectDTO!
     findAllProjectsByRequester(requester_id: ID!): [ProjectDTO!]!
     findAllProjects: [ProjectDTO!]!
 }

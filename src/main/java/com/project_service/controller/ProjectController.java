@@ -27,6 +27,11 @@ public class ProjectController {
     }
 
     @QueryMapping
+    public Project findProjectById(@Argument UUID id) {
+        return projectRepository.findById(id).orElseThrow(() -> new RuntimeException("Project not found with id: " + id));
+    }
+
+    @QueryMapping
     public List<Project> findAllProjectsByRequester(@Argument UUID requester_id) {
         return projectRepository.findAllByRequesterId(requester_id);
     }
@@ -48,6 +53,7 @@ public class ProjectController {
                 input.getExpectedStartDate(),
                 ProjectStatus.PENDING_ANALYSIS,
                 input.requesterId,
+                input.groupId != null ? input.groupId :
                 null
         ));
     }
@@ -83,16 +89,22 @@ public class ProjectController {
         return projectRepository.save(project);
     }
 
+
     @SchemaMapping(typeName = "ProjectDTO", field = "requesterId")
-    public UUID requester(Project projectDTO) {
-        return new User(projectDTO.getRequesterId()).getId();
+    public User requester(Project projectDTO) {
+        if (projectDTO.getRequesterId() != null) {
+            return new User(projectDTO.getRequesterId());
+        }
+        throw new RuntimeException("RequesterId não pode ser nulo");
     }
 
     @SchemaMapping(typeName = "ProjectDTO", field = "groupId")
-    public UUID group(Project projectDTO) {
-        if (projectDTO.getGroupId() == null) {
-            return null;
-        }
-        return new Group(projectDTO.getGroupId()).getId();
+    public Group group(Project projectDTO) {
+        return projectDTO.getGroupId() != null ? new Group(projectDTO.getGroupId()) : null;
+    }
+
+    @SchemaMapping(typeName = "ProjectDTO", field= "id")
+    public UUID __resolveReference(Project project) {
+        return projectRepository.findById(project.getId()).get().getId();
     }
 }
