@@ -45,7 +45,7 @@ public class ProjectController {
                 input.objective,
                 input.summaryScope,
                 input.targetAudience,
-                input.expectedStartDate,
+                input.getExpectedStartDate(),
                 ProjectStatus.PENDING_ANALYSIS,
                 input.requesterId,
                 null

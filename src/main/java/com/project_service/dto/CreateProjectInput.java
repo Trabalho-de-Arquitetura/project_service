@@ -14,4 +14,8 @@ public class CreateProjectInput {
     public ProjectStatus status;
     public UUID requesterId;
     public UUID groupId; // pode ser nulo
+
+    public LocalDate getExpectedStartDate(){
+        return this.expectedStartDate;
+    }
 }
