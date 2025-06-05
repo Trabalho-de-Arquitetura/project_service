@@ -1,5 +1,6 @@
 package com.project_service.controller;
 
+import com.project_service.dto.CreateProjectInput;
 import com.project_service.dto.Group;
 import com.project_service.dto.UpdateProjectInput;
 import com.project_service.dto.User;
@@ -37,21 +38,16 @@ public class ProjectController {
 
     @MutationMapping
     public Project saveProject(
-            @Argument String name,
-            @Argument String objective,
-            @Argument String summaryScope,
-            @Argument String targetAudience,
-            @Argument LocalDate expectedStartDate,
-            @Argument UUID requester
+            @Argument CreateProjectInput input
     ) {
         return projectRepository.save(new Project(
-                name,
-                objective,
-                summaryScope,
-                targetAudience,
-                expectedStartDate,
+                input.name,
+                input.objective,
+                input.summaryScope,
+                input.targetAudience,
+                input.expectedStartDate,
                 ProjectStatus.PENDING_ANALYSIS,
-                requester,
+                input.requesterId,
                 null
         ));
     }
