@@ -1,5 +1,14 @@
 package com.project_service.controller;
 
+import java.util.List;
+import java.util.UUID;
+
+import org.springframework.graphql.data.method.annotation.Argument;
+import org.springframework.graphql.data.method.annotation.MutationMapping;
+import org.springframework.graphql.data.method.annotation.QueryMapping;
+import org.springframework.graphql.data.method.annotation.SchemaMapping;
+import org.springframework.stereotype.Controller;
+
 import com.project_service.dto.CreateProjectInput;
 import com.project_service.dto.Group;
 import com.project_service.dto.UpdateProjectInput;
@@ -7,15 +16,6 @@ import com.project_service.dto.User;
 import com.project_service.entity.Project;
 import com.project_service.entity.ProjectStatus;
 import com.project_service.repository.ProjectRepository;
-import org.springframework.graphql.data.method.annotation.Argument;
-import org.springframework.graphql.data.method.annotation.MutationMapping;
-import org.springframework.graphql.data.method.annotation.QueryMapping;
-import org.springframework.graphql.data.method.annotation.SchemaMapping;
-import org.springframework.stereotype.Controller;
-
-import java.time.LocalDate;
-import java.util.List;
-import java.util.UUID;
 
 @Controller
 public class ProjectController {
@@ -40,6 +40,17 @@ public class ProjectController {
     public Project saveProject(
             @Argument CreateProjectInput input
     ) {
+        System.out.println("TESTE ");
+        System.out.println("TESTE ");
+        System.out.println("TESTE ");
+        System.out.println("TESTE ");
+        System.out.println("TESTE ");
+        System.out.println("TESTE ");
+        System.out.println("TESTE ");
+        System.out.println("TESTE ");
+        System.out.println("TESTE ");
+        System.out.println("TESTE "+ input.getName());
+        System.out.println("INPUT "+ input.getExpectedStartDate());
         return projectRepository.save(new Project(
                 input.name,
                 input.objective,
