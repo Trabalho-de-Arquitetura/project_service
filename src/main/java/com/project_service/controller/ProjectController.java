@@ -24,8 +24,8 @@ public class ProjectController {
     }
 
     @QueryMapping
-    public List<Project> findAllProjectsByRequester(@Argument UUID id) {
-        return projectRepository.findAllByRequester(id);
+    public List<Project> findAllProjectsByRequester(@Argument UUID requester_id) {
+        return projectRepository.findAllByRequesterId(requester_id);
     }
 
     @QueryMapping
@@ -64,12 +64,12 @@ public class ProjectController {
         return projectRepository.save(project);
     }
 
-    @SchemaMapping(typeName = "ProjectDTO", field = "requester")
+    @SchemaMapping(typeName = "ProjectDTO", field = "requesterId")
     public UUID requester(Project projectDTO) {
         return new User(projectDTO.getRequesterId()).getId();
     }
 
-    @SchemaMapping(typeName = "ProjectDTO", field = "group")
+    @SchemaMapping(typeName = "ProjectDTO", field = "groupId")
     public UUID group(Project projectDTO) {
         if (projectDTO.getGroupId() == null) {
             return null;

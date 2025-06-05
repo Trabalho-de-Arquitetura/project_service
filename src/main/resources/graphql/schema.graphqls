@@ -25,8 +25,8 @@ type ProjectDTO @key(fields: "id") {
     targetAudience: String!
     expectedStartDate: Date!
     status: ProjectStatus!
-    requester: UserDTO! # Referencia User
-    group: GroupDTO     # Referencia Group (pode ser nulo)
+    requesterId: UserDTO! # Referencia User
+    groupId: GroupDTO     # Referencia Group (pode ser nulo)
 }
 
 type Query {
