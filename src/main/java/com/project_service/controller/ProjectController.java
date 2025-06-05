@@ -49,15 +49,15 @@ public class ProjectController {
     }
 
     @SchemaMapping(typeName = "Project", field = "requester")
-    public User requester(Project project) {
-        return new User(project.getRequesterId());
+    public UUID requester(Project project) {
+        return new User(project.getRequesterId()).getId();
     }
 
     @SchemaMapping(typeName = "Project", field = "group")
-    public Group group(Project project) {
+    public UUID group(Project project) {
         if (project.getGroupId() == null) {
             return null;
         }
-        return new Group(project.getGroupId());
+        return new Group(project.getGroupId()).getId();
     }
 }
