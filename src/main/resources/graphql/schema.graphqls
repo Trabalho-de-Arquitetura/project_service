@@ -1,11 +1,11 @@
 scalar Date # Precisamos declarar o scalar para LocalDate
 
 # Stubs para tipos definidos externamente
-type User @key(fields: "id") @extends {
+type UserDTO @key(fields: "id") @extends {
     id: ID! @external
 }
 
-type Group @key(fields: "id") @extends {
+type GroupDTO @key(fields: "id") @extends {
     id: ID! @external
 }
 
@@ -17,7 +17,7 @@ enum ProjectStatus {
     FINISHED
 }
 
-type Project @key(fields: "id") {
+type ProjectDTO @key(fields: "id") {
     id: ID!
     name: String!
     objective: String!
@@ -25,13 +25,13 @@ type Project @key(fields: "id") {
     targetAudience: String!
     expectedStartDate: Date!
     status: ProjectStatus!
-    requester: User! # Referencia User
-    group: Group     # Referencia Group (pode ser nulo)
+    requester: UserDTO! # Referencia User
+    group: GroupDTO     # Referencia Group (pode ser nulo)
 }
 
 type Query {
-    projectById(id: ID!): Project
-    allProjects: [Project]
+    findAllProjectsByRequester(requester_id: ID!): [ProjectDTO!]!
+    findAllProjects: [ProjectDTO!]!
 }
 
 input CreateProjectInput {
@@ -45,6 +45,19 @@ input CreateProjectInput {
     groupId: ID # Opcional
 }
 
+input UpdateProjectInput {
+    id: ID!
+    name: String
+    objective: String
+    summaryScope: String
+    targetAudience: String
+    expectedStartDate: Date # Formato esperado: "YYYY-MM-DD"
+    status: ProjectStatus # Opcional
+    requesterId: ID
+    groupId: ID # Opcional
+}
+
 type Mutation {
-    createProject(input: CreateProjectInput!): Project
+    saveProject(input: CreateProjectInput!): ProjectDTO!
+    updateProject(input: UpdateProjectInput!): ProjectDTO!
 }
