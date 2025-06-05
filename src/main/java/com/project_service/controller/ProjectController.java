@@ -4,6 +4,7 @@ import com.project_service.dto.Group;
 import com.project_service.dto.UpdateProjectInput;
 import com.project_service.dto.User;
 import com.project_service.entity.Project;
+import com.project_service.entity.ProjectStatus;
 import com.project_service.repository.ProjectRepository;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
@@ -11,6 +12,7 @@ import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.graphql.data.method.annotation.SchemaMapping;
 import org.springframework.stereotype.Controller;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -31,6 +33,27 @@ public class ProjectController {
     @QueryMapping
     public List<Project> findAllProjects() {
         return projectRepository.findAll();
+    }
+
+    @MutationMapping
+    public Project saveProject(
+            @Argument String name,
+            @Argument String objective,
+            @Argument String summaryScope,
+            @Argument String targetAudience,
+            @Argument LocalDate expectedStartDate,
+            @Argument UUID requester
+    ) {
+        return projectRepository.save(new Project(
+                name,
+                objective,
+                summaryScope,
+                targetAudience,
+                expectedStartDate,
+                ProjectStatus.PENDING_ANALYSIS,
+                requester,
+                null
+        ));
     }
 
     @MutationMapping
