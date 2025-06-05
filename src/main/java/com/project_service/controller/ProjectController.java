@@ -40,17 +40,6 @@ public class ProjectController {
     public Project saveProject(
             @Argument CreateProjectInput input
     ) {
-        System.out.println("TESTE ");
-        System.out.println("TESTE ");
-        System.out.println("TESTE ");
-        System.out.println("TESTE ");
-        System.out.println("TESTE ");
-        System.out.println("TESTE ");
-        System.out.println("TESTE ");
-        System.out.println("TESTE ");
-        System.out.println("TESTE ");
-        System.out.println("TESTE "+ input.getName());
-        System.out.println("INPUT "+ input.getExpectedStartDate());
         return projectRepository.save(new Project(
                 input.name,
                 input.objective,
